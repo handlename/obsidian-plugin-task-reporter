@@ -21,7 +21,7 @@ jobs:
               id: tagpr
               uses: Songmu/tagpr@9c294c8b7b1815a5f3b7c61d6ee6aa50ac25b030 # v1.8.4
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
             - name: Setup Node.js
               if: steps.tagpr.outputs.tag != ''
@@ -40,7 +40,7 @@ jobs:
             - name: Upload release assets
               if: steps.tagpr.outputs.tag != ''
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
               run: |
                   gh release upload ${{ steps.tagpr.outputs.tag }} \
                     main.js \
