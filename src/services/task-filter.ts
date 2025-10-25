@@ -13,6 +13,13 @@ export function filterByTag(
 	excludePatterns: readonly string[]
 ): readonly Task[] {
 	return tasks.filter((task) => {
+		// サブタスク(level 1)はタグに関係なく保持
+		// 親タスクのフィルタリング結果に従う
+		if (task.level === 1) {
+			return true;
+		}
+
+		// レベル0(親タスク)のみタグでフィルタリング
 		// 対象タグプレフィックスを持つタグがあるか確認
 		const hasTargetTag = task.tags.some((tag) => tag.startsWith(tagPrefix));
 		if (!hasTargetTag) {
