@@ -8,10 +8,10 @@ export interface PluginSettings {
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
-	targetHeading: '## 今日やったこと',
+	targetHeading: '## Task',
 	targetTagPrefix: '#work/',
 	excludeTagPatterns: ['#work/routine'],
 	targetSubItemCheckChar: 'k',
 	canceledCheckChar: '-',
-	schedulePrefix: '📅',
+	schedulePrefix: '🗓️',
 };
