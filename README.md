@@ -147,7 +147,7 @@ npm run test:coverage
 
 ## ライセンス
 
-MIT License
+0BSD License
 
 ## 作者
 
