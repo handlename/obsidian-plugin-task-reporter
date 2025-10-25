@@ -1,0 +1,9 @@
+[tagpr]
+	releaseBranch = main
+	versionFile = manifest.json,package.json
+	vPrefix = true
+	changelog = true
+	release = true
+	majorLabels = major
+	minorLabels = minor
+	command = npm run build && npm run release
