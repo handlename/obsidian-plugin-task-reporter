@@ -99,7 +99,7 @@
 
 ## フェーズ3: サービス層実装(コア機能)
 
-- [ ] TaskExtractorの実装
+- [x] TaskExtractorの実装
   - 目的: ノートからタスクを抽出する機能を実装する
   - 詳細:
     - src/services/task-extractor.tsを作成
