@@ -81,7 +81,7 @@
     - Lintエラーがないこと
     - 基本的な動作確認(コンソール出力等)
 
-- [ ] TextFormatterの実装
+- [x] TextFormatterの実装
   - 目的: テキスト変換処理を実装する
   - 詳細:
     - src/utils/text-formatter.tsを作成
