@@ -35,11 +35,15 @@ export function removeInternalLinks(text: string): string {
 /**
  * GitHub URLを整形する (FR-006)
  * Issue/PR URLを [repo#number](url) 形式に変換
+ * ただし、既にMarkdownリンク内にあるURLは変換しない
  * @param text テキスト
  * @returns 変換後のテキスト
  */
 export function formatGitHubUrl(text: string): string {
-	const githubRegex = /https:\/\/github\.com\/([^/]+)\/([^/]+)\/(issues|pulls)\/(\d+)(\S*)/g;
+	// 既にMarkdownリンク内にあるURLは変換しない
+	// 負の後読み(?<!\]\() を使って、](の直後にあるURLは除外
+	const githubRegex =
+		/(?<!\]\()https:\/\/github\.com\/([^/]+)\/([^/]+)\/(issues|pulls)\/(\d+)(\S*)/g;
 	return text.replace(githubRegex, '[$2#$4](https://github.com/$1/$2/$3/$4$5)');
 }
 
