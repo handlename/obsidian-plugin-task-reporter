@@ -68,7 +68,7 @@
 
 ## フェーズ2: ユーティリティ実装
 
-- [ ] MarkdownParserの実装
+- [x] MarkdownParserの実装
   - 目的: Markdown構造を解析するユーティリティを実装する
   - 詳細:
     - src/utils/markdown-parser.tsを作成
