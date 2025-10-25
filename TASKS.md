@@ -126,7 +126,7 @@
     - 対象タグのタスクのみが抽出されること
     - 除外タグが正しく動作すること
 
-- [ ] TaskFormatterの基本実装
+- [x] TaskFormatterの基本実装
   - 目的: タスクのフォーマット機能を実装する
   - 詳細:
     - src/services/task-formatter.tsを作成
