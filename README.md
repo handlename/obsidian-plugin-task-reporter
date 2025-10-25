@@ -1,5 +1,7 @@
 # Task Reporter - Obsidian Plugin
 
+[![CI](https://github.com/handlename/obsidian-plugin-task-reporter/actions/workflows/ci.yml/badge.svg)](https://github.com/handlename/obsidian-plugin-task-reporter/actions/workflows/ci.yml)
+
 Obsidianで管理しているタスクリストを日報などの報告用フォーマットに整形し、クリップボードにコピーするプラグインです。
 
 ## 機能
