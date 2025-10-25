@@ -1,10 +1,10 @@
 export interface PluginSettings {
-	readonly targetHeading: string;
-	readonly targetTagPrefix: string;
-	readonly excludeTagPatterns: readonly string[];
-	readonly targetSubItemCheckChar: string;
-	readonly canceledCheckChar: string;
-	readonly schedulePrefix: string;
+	targetHeading: string;
+	targetTagPrefix: string;
+	excludeTagPatterns: string[];
+	targetSubItemCheckChar: string;
+	canceledCheckChar: string;
+	schedulePrefix: string;
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {

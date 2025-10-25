@@ -4,12 +4,16 @@ import { copyToClipboard } from './services/clipboard-service';
 import { extractTasksFromHeading } from './services/task-extractor';
 import { filterByTag, filterSubItems } from './services/task-filter';
 import { formatTasks } from './services/task-formatter';
+import { TaskReporterSettingTab } from './ui/settings-tab';
 
 export default class TaskReporterPlugin extends Plugin {
 	settings: PluginSettings = DEFAULT_SETTINGS;
 
 	async onload() {
 		await this.loadSettings();
+
+		// 設定タブ登録
+		this.addSettingTab(new TaskReporterSettingTab(this.app, this));
 
 		// コマンド登録
 		this.addCommand({
