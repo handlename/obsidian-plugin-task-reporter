@@ -190,7 +190,7 @@
 
 ## フェーズ5: クリップボードサービス実装
 
-- [ ] ClipboardServiceの実装
+- [x] ClipboardServiceの実装
   - 目的: FR-009のクリップボードコピー機能を実装する
   - 詳細:
     - src/services/clipboard-service.tsを作成
