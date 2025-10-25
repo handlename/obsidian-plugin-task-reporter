@@ -1,94 +1,122 @@
-# Obsidian Sample Plugin
+# Task Reporter - Obsidian Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+Obsidianで管理しているタスクリストを日報などの報告用フォーマットに整形し、クリップボードにコピーするプラグインです。
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## 機能
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+- 指定した見出し配下のタスクリストを抽出
+- タグによるフィルタリング
+- サブタスクのフィルタリング
+- タスク本文の自動整形
+  - タグの変換 (`#work/dev` → `*dev*`)
+  - 内部リンクの除去
+  - GitHub URL の整形
+  - キャンセルタスクの取り消し線表示
+  - スケジュールタスクへの絵文字付与
+- クリップボードへのコピー
 
-## First time developing plugins?
+## インストール方法
 
-Quick starting guide for new plugin devs:
+### BRAT経由でのインストール (推奨)
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+1. [BRAT (Beta Reviewers Auto-update Tool)](https://github.com/TfTHacker/obsidian42-brat) をObsidianにインストール
+2. BRATの設定を開く
+3. "Add Beta plugin" をクリック
+4. `handlename/obsidian-plugin-task-reporter` を入力
+5. プラグインが自動的にインストールされます
 
-## Releasing new releases
+### 手動インストール
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+1. [最新リリース](https://github.com/handlename/obsidian-plugin-task-reporter/releases)から `main.js`, `manifest.json`, `styles.css` をダウンロード
+2. Obsidian Vaultの `.obsidian/plugins/task-reporter/` ディレクトリに配置
+3. Obsidianを再起動
+4. 設定 → コミュニティプラグインからTask Reporterを有効化
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+## 使い方
 
-## Adding your plugin to the community plugin list
+### 基本的な使い方
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+1. タスクリストを含むノートを開く
+2. コマンドパレット (`Cmd/Ctrl + P`) を開く
+3. "Format tasks and copy to clipboard" を実行
+4. フォーマットされたタスクがクリップボードにコピーされます
 
-## How to use
+### ノートの例
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+```markdown
+## 今日やったこと
 
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint ./src/`
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+- [x] プロジェクトAの設計書作成 #work/dev
+    - [k] 要件定義の確認
+    - [k] 技術スタックの選定
+- [x] [[ミーティング資料]]のレビュー #work/review
+- [x] https://github.com/org/repo/issues/123 の対応 #work/bugfix
+- [-] 定例MTG #work/routine
+- [ ] 📅 明日のタスク準備 #work/planning
 ```
 
-If you have multiple URLs, you can also do:
+### 出力例
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+```
+- プロジェクトAの設計書作成 *dev*
+    - 要件定義の確認
+    - 技術スタックの選定
+- ミーティング資料のレビュー *review*
+- [repo#123](https://github.com/org/repo/issues/123) の対応 *bugfix*
 ```
 
-## API Documentation
+## 設定項目
 
-See https://github.com/obsidianmd/obsidian-api
+設定画面(設定 → Task Reporter)で以下のパラメータをカスタマイズできます:
+
+- **対象見出し**: タスクを抽出する見出し (デフォルト: `## 今日やったこと`)
+- **対象タグプレフィックス**: フォーマット対象とするタグのプレフィックス (デフォルト: `#work/`)
+- **除外タグパターン**: 除外するタグ (デフォルト: `#work/routine`)
+- **対象サブアイテムのチェック文字**: サブタスクとして含めるチェック文字 (デフォルト: `k`)
+- **キャンセルタスクのチェック文字**: 取り消し線を適用するチェック文字 (デフォルト: `-`)
+- **スケジュールタスクのプレフィックス**: スケジュールタスクの絵文字 (デフォルト: `📅`)
+
+## 開発
+
+### 環境要件
+
+- Node.js v24
+- npm v10以降
+
+### セットアップ
+
+```bash
+# 依存関係のインストール
+npm install
+
+# 開発モード (ファイル監視)
+npm run dev
+
+# プロダクションビルド
+npm run build
+
+# テスト実行
+npm test
+
+# Lint & フォーマット
+npm run lint
+npm run format
+```
+
+### テスト
+
+```bash
+# テスト実行
+npm test
+
+# カバレッジ確認
+npm run test:coverage
+```
+
+## ライセンス
+
+MIT License
+
+## 作者
+
+[handlename](https://github.com/handlename)

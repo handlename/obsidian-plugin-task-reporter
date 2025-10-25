@@ -297,7 +297,7 @@
     - `npm run release`が正常に実行されること
     - releaseディレクトリに必要ファイルが揃っていること
 
-- [ ] manifest.jsonの更新
+- [x] manifest.jsonの更新
   - 目的: プラグインメタデータを正しく設定する
   - 詳細:
     - idの変更(task-reporter等)
@@ -309,7 +309,7 @@
     - manifest.jsonが正しく設定されていること
     - BRATでインストール可能な状態であること
 
-- [ ] README.mdの更新
+- [x] README.mdの更新
   - 目的: プラグインの使い方を文書化する
   - 詳細:
     - プラグインの概要説明
