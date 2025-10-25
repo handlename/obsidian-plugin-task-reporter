@@ -48,3 +48,10 @@ jobs:
                     manifest-beta.json \
                     styles.css \
                     --clobber
+
+            - name: Publish release
+              if: steps.tagpr.outputs.tag != ''
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+              run: |
+                  gh release edit ${{ steps.tagpr.outputs.tag }} --draft=false
