@@ -52,7 +52,7 @@
     - TypeScriptの型チェックが通ること
     - Lintエラーがないこと
 
-- [ ] PluginSettingsモデルの定義
+- [x] PluginSettingsモデルの定義
   - 目的: プラグイン設定のデータ構造を定義する
   - 詳細:
     - src/models/settings.tsを作成
