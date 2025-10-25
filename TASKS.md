@@ -144,7 +144,7 @@
 
 ## フェーズ4: サービス層実装(フォーマット機能拡張)
 
-- [ ] タグ変換機能の統合
+- [x] タグ変換機能の統合
   - 目的: FR-004のタグ変換機能をTaskFormatterに統合する
   - 詳細:
     - TextFormatter.convertTagをTaskFormatter内で呼び出し
@@ -154,7 +154,7 @@
     - タグが正しく変換されること
     - プレフィックスに一致しないタグが保持されること
 
-- [ ] 内部リンク除去機能の統合
+- [x] 内部リンク除去機能の統合
   - 目的: FR-005の内部リンク除去機能をTaskFormatterに統合する
   - 詳細:
     - TextFormatter.removeInternalLinksをTaskFormatter内で呼び出し
@@ -166,7 +166,7 @@
     - WikiLink形式が正しく変換されること
     - 外部リンクが保持されること
 
-- [ ] GitHub URL整形機能の統合
+- [x] GitHub URL整形機能の統合
   - 目的: FR-006のGitHub URL整形機能をTaskFormatterに統合する
   - 詳細:
     - TextFormatter.formatGitHubUrlをTaskFormatter内で呼び出し
@@ -176,7 +176,7 @@
     - GitHub URLが正しく整形されること
     - 他のURLが影響を受けないこと
 
-- [ ] ステータス装飾機能の統合
+- [x] ステータス装飾機能の統合
   - 目的: FR-007のステータス装飾機能をTaskFormatterに統合する
   - 詳細:
     - キャンセルタスクの取り消し線処理
