@@ -112,7 +112,7 @@
     - Lintエラーがないこと
     - 見出し配下のタスクが正しく抽出されること
 
-- [ ] TaskFilterの実装
+- [x] TaskFilterの実装
   - 目的: タスクのフィルタリング機能を実装する
   - 詳細:
     - src/services/task-filter.tsを作成
