@@ -19,13 +19,16 @@ Obsidianで管理しているタスクリストを日報などの報告用フォ
 
 ## インストール方法
 
-### BRAT経由でのインストール (推奨)
+### BRAT経由でのインストール (ベータ版・推奨)
 
 1. [BRAT (Beta Reviewers Auto-update Tool)](https://github.com/TfTHacker/obsidian42-brat) をObsidianにインストール
 2. BRATの設定を開く
 3. "Add Beta plugin" をクリック
 4. `handlename/obsidian-plugin-task-reporter` を入力
 5. プラグインが自動的にインストールされます
+6. 新しいリリースがあると自動的に更新されます
+
+**Note**: BRATは `manifest-beta.json` を使用してベータ版を管理します
 
 ### 手動インストール
 

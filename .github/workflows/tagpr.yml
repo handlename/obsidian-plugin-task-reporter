@@ -1,49 +1,50 @@
 name: tagpr
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 permissions:
-  contents: write
-  pull-requests: write
-  issues: read
+    contents: write
+    pull-requests: write
+    issues: read
 
 jobs:
-  tagpr:
-    runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.tagpr.outputs.tag }}
-    steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+    tagpr:
+        runs-on: ubuntu-latest
+        outputs:
+            tag: ${{ steps.tagpr.outputs.tag }}
+        steps:
+            - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
 
-      - name: Run tagpr
-        id: tagpr
-        uses: Songmu/tagpr@9c294c8b7b1815a5f3b7c61d6ee6aa50ac25b030 # v1.8.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Run tagpr
+              id: tagpr
+              uses: Songmu/tagpr@9c294c8b7b1815a5f3b7c61d6ee6aa50ac25b030 # v1.8.4
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
-        if: steps.tagpr.outputs.tag != ''
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: '24'
+            - name: Setup Node.js
+              if: steps.tagpr.outputs.tag != ''
+              uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version: "24"
 
-      - name: Install dependencies
-        if: steps.tagpr.outputs.tag != ''
-        run: npm ci
+            - name: Install dependencies
+              if: steps.tagpr.outputs.tag != ''
+              run: npm ci
 
-      - name: Build plugin
-        if: steps.tagpr.outputs.tag != ''
-        run: npm run build
+            - name: Build plugin
+              if: steps.tagpr.outputs.tag != ''
+              run: npm run build
 
-      - name: Upload release assets
-        if: steps.tagpr.outputs.tag != ''
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release upload ${{ steps.tagpr.outputs.tag }} \
-            main.js \
-            manifest.json \
-            styles.css \
-            --clobber
+            - name: Upload release assets
+              if: steps.tagpr.outputs.tag != ''
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  gh release upload ${{ steps.tagpr.outputs.tag }} \
+                    main.js \
+                    manifest.json \
+                    manifest-beta.json \
+                    styles.css \
+                    --clobber

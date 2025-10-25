@@ -1,0 +1,10 @@
+{
+	"id": "task-reporter",
+	"name": "Task Reporter",
+	"version": "0.1.0",
+	"minAppVersion": "1.0.0",
+	"description": "Format task lists from Obsidian notes and copy to clipboard for daily reports",
+	"author": "handlename",
+	"authorUrl": "https://github.com/handlename",
+	"isDesktopOnly": false
+}

@@ -1,8 +1,13 @@
-import { copyFileSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { copyFileSync, mkdirSync } from "fs";
+import { join } from "path";
 
-const RELEASE_DIR = 'release';
-const FILES_TO_COPY = ['main.js', 'manifest.json', 'styles.css'];
+const RELEASE_DIR = "release";
+const FILES_TO_COPY = [
+	"main.js",
+	"manifest.json",
+	"manifest-beta.json",
+	"styles.css",
+];
 
 // リリースディレクトリ作成
 mkdirSync(RELEASE_DIR, { recursive: true });
@@ -15,8 +20,12 @@ for (const file of FILES_TO_COPY) {
 	console.log(`Copied: ${file} -> ${RELEASE_DIR}/`);
 }
 
-console.log('\nRelease files prepared successfully!');
-console.log('\nNext steps:');
-console.log('1. Create a GitHub release with tag matching manifest.json version');
-console.log('2. Upload files from release/ as release assets');
-console.log('3. Users can install via BRAT using: handlename/obsidian-plugin-task-reporter');
+console.log("\nRelease files prepared successfully!");
+console.log("\nNext steps:");
+console.log(
+	"1. Create a GitHub release with tag matching manifest.json version",
+);
+console.log("2. Upload files from release/ as release assets");
+console.log(
+	"3. Users can install via BRAT using: handlename/obsidian-plugin-task-reporter",
+);
