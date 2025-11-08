@@ -142,6 +142,14 @@ describe("task-formatter", () => {
 			);
 		});
 
+		it("should handle canceled schedule items correctly", () => {
+			const tasks: Task[] = [
+				createTask("🗓️ 10:30 #work/project1 面談(キャンセル)", 0, "-"),
+			];
+			const result = formatTasks(tasks, defaultSettings);
+			expect(result).toBe("- ~🗓️ 10:30 *project1* 面談(キャンセル)~");
+		});
+
 		it("should return empty string for empty tasks array", () => {
 			const result = formatTasks([], defaultSettings);
 			expect(result).toBe("");

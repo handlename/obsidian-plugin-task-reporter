@@ -27,16 +27,15 @@ export function formatTasks(tasks: readonly Task[], settings: PluginSettings): s
 function formatTask(task: Task, settings: PluginSettings): string {
 	let content = formatTaskContent(task.content, settings);
 
+	// FR-007: スケジュールタスクの絵文字付与（取り消し線の前に処理）
+	const hasSchedulePrefix = task.content.startsWith(settings.schedulePrefix);
+	if (hasSchedulePrefix && !content.startsWith(settings.schedulePrefix)) {
+		content = `${settings.schedulePrefix} ${content}`;
+	}
+
 	// FR-007: キャンセルタスクの取り消し線処理
 	if (task.checkChar === settings.canceledCheckChar) {
 		content = applyStrikethrough(content);
-	}
-
-	// FR-007: スケジュールタスクの絵文字付与
-	if (content.startsWith(settings.schedulePrefix)) {
-		// プレフィックスが既にある場合はそのまま
-	} else if (task.content.startsWith(settings.schedulePrefix)) {
-		content = `${settings.schedulePrefix} ${content}`;
 	}
 
 	// FR-008: インデント処理
