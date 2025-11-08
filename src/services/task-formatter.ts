@@ -1,11 +1,11 @@
-import type { PluginSettings } from "../models/settings";
-import type { Task } from "../models/task";
+import type { PluginSettings } from '../models/settings';
+import type { Task } from '../models/task';
 import {
 	applyStrikethrough,
 	convertTag,
 	formatGitHubUrl,
 	removeInternalLinks,
-} from "../utils/text-formatter";
+} from '../utils/text-formatter';
 
 /**
  * タスクの配列をフォーマットされた文字列に変換する (FR-004~FR-008統合)
@@ -13,12 +13,9 @@ import {
  * @param settings プラグイン設定
  * @returns フォーマットされた文字列
  */
-export function formatTasks(
-	tasks: readonly Task[],
-	settings: PluginSettings,
-): string {
+export function formatTasks(tasks: readonly Task[], settings: PluginSettings): string {
 	const formattedLines = tasks.map((task) => formatTask(task, settings));
-	return formattedLines.join("\n");
+	return formattedLines.join('\n');
 }
 
 /**
@@ -42,7 +39,7 @@ function formatTask(task: Task, settings: PluginSettings): string {
 	}
 
 	// FR-008: インデント処理
-	const indent = task.level === 0 ? "" : "    ";
+	const indent = task.level === 0 ? '' : '    ';
 	return `${indent}- ${content}`;
 }
 
@@ -52,10 +49,7 @@ function formatTask(task: Task, settings: PluginSettings): string {
  * @param settings プラグイン設定
  * @returns フォーマットされた本文
  */
-export function formatTaskContent(
-	content: string,
-	settings: PluginSettings,
-): string {
+export function formatTaskContent(content: string, settings: PluginSettings): string {
 	let result = content;
 
 	// FR-004: タグ変換
