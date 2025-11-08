@@ -4,4 +4,5 @@ export interface Task {
 	readonly checkChar: string;
 	readonly tags: readonly string[];
 	readonly lineNumber: number;
+	readonly isScheduleItem: boolean;
 }

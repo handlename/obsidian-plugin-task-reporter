@@ -5,6 +5,7 @@
 - Target: Obsidian Community Plugin (TypeScript → bundled JavaScript).
 - Entry point: `main.ts` compiled to `main.js` and loaded by Obsidian.
 - Required release artifacts: `main.js`, `manifest.json`, and optional `styles.css`.
+- Documents: REQUIREMENTS.md, DESIGN.md
 
 ## Environment & tooling
 
@@ -35,10 +36,32 @@ npm run build
 
 ## Linting
 
-- To use eslint install eslint from terminal: `npm install -g eslint`
-- To use eslint to analyze this project use this command: `eslint main.ts`
-- eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder: `eslint ./src/`
+This project uses **Biome** for linting and formatting.
+
+### Running lint checks
+
+```bash
+npm run lint
+```
+
+This checks all files in `src/` and `tests/` for code quality and formatting issues.
+
+### Auto-fixing lint issues
+
+```bash
+npm run lint:fix
+```
+
+This automatically fixes formatting issues and some linting problems.
+
+### Workflow for code changes
+
+**After editing source code, always:**
+
+1. Run tests: `npm test`
+2. Run lint check: `npm run lint`
+3. If lint issues are found, fix them with: `npm run lint:fix` or manually
+4. Verify all checks pass before committing
 
 ## File & folder conventions
 
@@ -66,13 +89,13 @@ npm run build
 
 ## Manifest rules (`manifest.json`)
 
-- Must include (non-exhaustive):  
-  - `id` (plugin ID; for local dev it should match the folder name)  
-  - `name`  
-  - `version` (Semantic Versioning `x.y.z`)  
-  - `minAppVersion`  
-  - `description`  
-  - `isDesktopOnly` (boolean)  
+- Must include (non-exhaustive):
+  - `id` (plugin ID; for local dev it should match the folder name)
+  - `name`
+  - `version` (Semantic Versioning `x.y.z`)
+  - `minAppVersion`
+  - `description`
+  - `isDesktopOnly` (boolean)
   - Optional: `author`, `authorUrl`, `fundingUrl` (string or map)
 - Never change `id` after release. Treat it as stable API.
 - Keep `minAppVersion` accurate when using newer APIs.
@@ -236,7 +259,7 @@ this.registerInterval(window.setInterval(() => { /* ... */ }, 1000));
 
 ## Troubleshooting
 
-- Plugin doesn't load after build: ensure `main.js` and `manifest.json` are at the top level of the plugin folder under `<Vault>/.obsidian/plugins/<plugin-id>/`. 
+- Plugin doesn't load after build: ensure `main.js` and `manifest.json` are at the top level of the plugin folder under `<Vault>/.obsidian/plugins/<plugin-id>/`.
 - Build issues: if `main.js` is missing, run `npm run build` or `npm run dev` to compile your TypeScript source code.
 - Commands not appearing: verify `addCommand` runs after `onload` and IDs are unique.
 - Settings not persisting: ensure `loadData`/`saveData` are awaited and you re-render the UI after changes.

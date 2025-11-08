@@ -15,9 +15,10 @@ export function findHeading(content: string, heading: string): number | null {
 /**
  * タスクリストを解析してTaskオブジェクトの配列に変換する
  * @param lines タスクリストを含む行の配列
+ * @param schedulePrefix スケジュールプレフィックス (例: "🗓️")
  * @returns Taskオブジェクトの配列
  */
-export function parseTaskList(lines: readonly string[]): readonly Task[] {
+export function parseTaskList(lines: readonly string[], schedulePrefix: string): readonly Task[] {
 	const tasks: Task[] = [];
 	const taskRegex = /^(\s*)- \[(.)\] (.+)$/;
 
@@ -29,6 +30,7 @@ export function parseTaskList(lines: readonly string[]): readonly Task[] {
 			const [, indent, checkChar, content] = match;
 			const level = indent.length === 0 ? 0 : 1;
 			const tags = extractTags(content);
+			const isScheduleItem = content.trimStart().startsWith(schedulePrefix);
 
 			tasks.push({
 				content,
@@ -36,6 +38,7 @@ export function parseTaskList(lines: readonly string[]): readonly Task[] {
 				checkChar,
 				tags,
 				lineNumber: i,
+				isScheduleItem,
 			});
 		}
 	}

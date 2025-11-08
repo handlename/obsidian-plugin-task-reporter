@@ -46,7 +46,11 @@ export default class TaskReporterPlugin extends Plugin {
 			const content = activeView.editor.getValue();
 
 			// タスク抽出
-			const tasks = extractTasksFromHeading(content, this.settings.targetHeading);
+			const tasks = extractTasksFromHeading(
+				content,
+				this.settings.targetHeading,
+				this.settings.schedulePrefix
+			);
 
 			if (tasks.length === 0) {
 				new Notice(`指定された見出し『${this.settings.targetHeading}』が見つかりませんでした`);
@@ -57,7 +61,8 @@ export default class TaskReporterPlugin extends Plugin {
 			const tagFiltered = filterByTag(
 				tasks,
 				this.settings.targetTagPrefix,
-				this.settings.excludeTagPatterns
+				this.settings.excludeTagPatterns,
+				this.settings.includeScheduleItems
 			);
 
 			// サブアイテムをフィルタリング
