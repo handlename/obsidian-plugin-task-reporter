@@ -36,10 +36,32 @@ npm run build
 
 ## Linting
 
-- To use eslint install eslint from terminal: `npm install -g eslint`
-- To use eslint to analyze this project use this command: `eslint main.ts`
-- eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder: `eslint ./src/`
+This project uses **Biome** for linting and formatting.
+
+### Running lint checks
+
+```bash
+npm run lint
+```
+
+This checks all files in `src/` and `tests/` for code quality and formatting issues.
+
+### Auto-fixing lint issues
+
+```bash
+npm run lint:fix
+```
+
+This automatically fixes formatting issues and some linting problems.
+
+### Workflow for code changes
+
+**After editing source code, always:**
+
+1. Run tests: `npm test`
+2. Run lint check: `npm run lint`
+3. If lint issues are found, fix them with: `npm run lint:fix` or manually
+4. Verify all checks pass before committing
 
 ## File & folder conventions
 
