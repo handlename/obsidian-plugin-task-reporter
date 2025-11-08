@@ -3,12 +3,17 @@ import type { Task } from "../../src/models/task";
 
 describe("task-filter", () => {
 	describe("filterByTag", () => {
-		const createTask = (tags: string[], level = 0): Task => ({
+		const createTask = (
+			tags: string[],
+			level = 0,
+			isScheduleItem = false,
+		): Task => ({
 			content: "Test task",
 			level,
 			checkChar: "x",
 			tags,
 			lineNumber: 0,
+			isScheduleItem,
 		});
 
 		it("should filter tasks with matching tag prefix", () => {
@@ -125,6 +130,7 @@ describe("task-filter", () => {
 					checkChar: "x",
 					tags: ["#work/dev"],
 					lineNumber: 5,
+					isScheduleItem: false,
 				},
 			];
 
@@ -136,6 +142,7 @@ describe("task-filter", () => {
 				checkChar: "x",
 				tags: ["#work/dev"],
 				lineNumber: 5,
+				isScheduleItem: false,
 			});
 		});
 
@@ -187,6 +194,63 @@ describe("task-filter", () => {
 			expect(level0Tasks).toHaveLength(2);
 			expect(level1Tasks).toHaveLength(3);
 		});
+
+		it("should include schedule items when includeScheduleItems is true", () => {
+			const tasks: Task[] = [
+				createTask([], 0, true), // スケジュールアイテム、タグなし
+				createTask(["#work/dev"], 0, false), // 通常タスク
+				createTask(["#personal/hobby"], 0, true), // スケジュールアイテム、異なるタグ
+			];
+
+			const filtered = filterByTag(tasks, "#work/", [], true);
+
+			// スケジュールアイテム2つと通常タスク1つ
+			expect(filtered).toHaveLength(3);
+			expect(filtered[0].isScheduleItem).toBe(true);
+			expect(filtered[1].tags).toContain("#work/dev");
+			expect(filtered[2].isScheduleItem).toBe(true);
+		});
+
+		it("should not include schedule items when includeScheduleItems is false", () => {
+			const tasks: Task[] = [
+				createTask([], 0, true), // スケジュールアイテム、タグなし
+				createTask(["#work/dev"], 0, false), // 通常タスク
+				createTask(["#personal/hobby"], 0, true), // スケジュールアイテム、異なるタグ
+			];
+
+			const filtered = filterByTag(tasks, "#work/", [], false);
+
+			expect(filtered).toHaveLength(1);
+			expect(filtered[0].tags).toContain("#work/dev");
+		});
+
+		it("should exclude schedule items with exclude tag patterns", () => {
+			const tasks: Task[] = [
+				createTask(["#work/routine"], 0, true), // スケジュールアイテム、除外タグ
+				createTask(["#work/dev"], 0, true), // スケジュールアイテム、通常タグ
+			];
+
+			const filtered = filterByTag(
+				tasks,
+				"#work/",
+				["#work/routine"],
+				true,
+			);
+
+			expect(filtered).toHaveLength(1);
+			expect(filtered[0].tags).toContain("#work/dev");
+		});
+
+		it("should include schedule items with target tag when includeScheduleItems is true", () => {
+			const tasks: Task[] = [
+				createTask(["#work/dev"], 0, true), // スケジュールアイテム、対象タグあり
+			];
+
+			const filtered = filterByTag(tasks, "#work/", [], true);
+
+			expect(filtered).toHaveLength(1);
+			expect(filtered[0].isScheduleItem).toBe(true);
+		});
 	});
 
 	describe("filterSubItems", () => {
@@ -196,6 +260,7 @@ describe("task-filter", () => {
 			checkChar,
 			tags: [],
 			lineNumber: 0,
+			isScheduleItem: false,
 		});
 
 		it("should include all level 0 tasks", () => {
@@ -290,6 +355,7 @@ describe("task-filter", () => {
 					checkChar: "x",
 					tags: ["#work/dev"],
 					lineNumber: 1,
+					isScheduleItem: false,
 				},
 				{
 					content: "Sub task",
@@ -297,6 +363,7 @@ describe("task-filter", () => {
 					checkChar: "k",
 					tags: ["#work/review"],
 					lineNumber: 2,
+					isScheduleItem: false,
 				},
 			];
 

@@ -5,9 +5,14 @@ import { findHeading, parseTaskList } from '../utils/markdown-parser';
  * 指定された見出し配下のタスクを抽出する (FR-001)
  * @param content ノート全体の内容
  * @param heading 対象見出し (例: "## 今日やったこと")
+ * @param schedulePrefix スケジュールプレフィックス (例: "🗓️")
  * @returns 抽出されたTaskの配列
  */
-export function extractTasksFromHeading(content: string, heading: string): readonly Task[] {
+export function extractTasksFromHeading(
+	content: string,
+	heading: string,
+	schedulePrefix: string
+): readonly Task[] {
 	const headingLineNumber = findHeading(content, heading);
 
 	if (headingLineNumber === null) {
@@ -29,5 +34,5 @@ export function extractTasksFromHeading(content: string, heading: string): reado
 		tasksLines.push(line);
 	}
 
-	return parseTaskList(tasksLines);
+	return parseTaskList(tasksLines, schedulePrefix);
 }

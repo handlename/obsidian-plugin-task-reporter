@@ -76,10 +76,21 @@ export class TaskReporterSettingTab extends PluginSettingTab {
 		// スケジュールタスクのプレフィックス
 		new Setting(containerEl)
 			.setName('スケジュールタスクのプレフィックス')
-			.setDesc('スケジュールタスクの先頭に付ける絵文字 (例: 📅)')
+			.setDesc('スケジュールタスクの先頭に付ける絵文字 (例: 🗓️)')
 			.addText((text) =>
 				text.setValue(this.plugin.settings.schedulePrefix).onChange(async (value) => {
 					this.plugin.settings.schedulePrefix = value;
+					await this.plugin.saveSettings();
+				})
+			);
+
+		// スケジュールアイテムを含める
+		new Setting(containerEl)
+			.setName('スケジュールアイテムを含める')
+			.setDesc('スケジュールプレフィックスがついたアイテムをタグに関係なくレポートに含める')
+			.addToggle((toggle) =>
+				toggle.setValue(this.plugin.settings.includeScheduleItems).onChange(async (value) => {
+					this.plugin.settings.includeScheduleItems = value;
 					await this.plugin.saveSettings();
 				})
 			);
