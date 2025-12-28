@@ -49,7 +49,8 @@ export default class TaskReporterPlugin extends Plugin {
 			const tasks = extractTasksFromHeading(
 				content,
 				this.settings.targetHeading,
-				this.settings.schedulePrefix
+				this.settings.schedulePrefix,
+				this.settings.includeSubHeadings
 			);
 
 			if (tasks.length === 0) {

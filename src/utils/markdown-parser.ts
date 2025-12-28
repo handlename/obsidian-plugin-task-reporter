@@ -56,3 +56,13 @@ export function extractTags(text: string): readonly string[] {
 	const matches = text.match(tagRegex);
 	return matches ?? [];
 }
+
+/**
+ * 行の見出しレベルを取得する
+ * @param line 解析対象の行
+ * @returns 見出しレベル (例: "## 見出し" -> 2)、見出しでない場合はnull
+ */
+export function getHeadingLevel(line: string): number | null {
+	const match = line.trim().match(/^(#+)\s/);
+	return match ? match[1].length : null;
+}
