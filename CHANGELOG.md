@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.2.2](https://github.com/handlename/obsidian-plugin-task-reporter/compare/v0.2.1...v0.2.2) - 2025-12-28
+- feat: 対象見出し配下の子見出し内タスクも含める設定を追加 by @handlename in https://github.com/handlename/obsidian-plugin-task-reporter/pull/10
+- chore: update actions by @handlename in https://github.com/handlename/obsidian-plugin-task-reporter/pull/12
+
 ## [v0.2.1](https://github.com/handlename/obsidian-plugin-task-reporter/compare/v0.2.0...v0.2.1) - 2025-11-08
 - fix: キャンセルされたスケジュールのプレフィックス二重出力を修正 by @handlename in https://github.com/handlename/obsidian-plugin-task-reporter/pull/7
 
