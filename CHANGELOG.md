@@ -1,6 +1,6 @@
 # Changelog
 
-## [v0.2.2](https://github.com/handlename/obsidian-plugin-task-reporter/compare/v0.2.1...v0.2.2) - 2025-12-28
+## [v0.3.0](https://github.com/handlename/obsidian-plugin-task-reporter/compare/v0.2.1...v0.3.0) - 2025-12-28
 - feat: 対象見出し配下の子見出し内タスクも含める設定を追加 by @handlename in https://github.com/handlename/obsidian-plugin-task-reporter/pull/10
 - chore: update actions by @handlename in https://github.com/handlename/obsidian-plugin-task-reporter/pull/12
 
