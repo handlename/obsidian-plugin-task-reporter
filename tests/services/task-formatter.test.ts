@@ -14,6 +14,7 @@ describe("task-formatter", () => {
 		canceledCheckChar: "-",
 		schedulePrefix: "🗓️",
 		includeScheduleItems: false,
+		includeSubHeadings: false,
 	};
 
 	const createTask = (

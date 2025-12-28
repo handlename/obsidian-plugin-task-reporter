@@ -94,5 +94,16 @@ export class TaskReporterSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				})
 			);
+
+		// 孫要素も含める
+		new Setting(containerEl)
+			.setName('孫要素も含める')
+			.setDesc('対象見出し配下の子見出し内のタスクもレポートに含める')
+			.addToggle((toggle) =>
+				toggle.setValue(this.plugin.settings.includeSubHeadings).onChange(async (value) => {
+					this.plugin.settings.includeSubHeadings = value;
+					await this.plugin.saveSettings();
+				})
+			);
 	}
 }

@@ -201,4 +201,182 @@ More text
 			expect(tasks).toEqual([]);
 		});
 	});
+
+	describe("extractTasksFromHeading with includeSubHeadings", () => {
+		it("should not include tasks under sub-headings when includeSubHeadings is false", () => {
+			const content = `## Task
+
+- [ ] #work/main task1
+- [ ] #work/main task2
+
+### Task Group A
+
+- [ ] #work/groupA task1
+- [ ] #work/groupA task2`;
+
+			const tasks = extractTasksFromHeading(
+				content,
+				"## Task",
+				schedulePrefix,
+				false,
+			);
+
+			expect(tasks).toHaveLength(2);
+			expect(tasks[0].content).toBe("#work/main task1");
+			expect(tasks[1].content).toBe("#work/main task2");
+		});
+
+		it("should include tasks under sub-headings when includeSubHeadings is true", () => {
+			const content = `## Task
+
+- [ ] #work/main task1
+- [ ] #work/main task2
+
+### Task Group A
+
+- [ ] #work/groupA task1
+- [ ] #work/groupA task2
+
+### Task Group B
+
+- [ ] #work/groupB task1`;
+
+			const tasks = extractTasksFromHeading(
+				content,
+				"## Task",
+				schedulePrefix,
+				true,
+			);
+
+			expect(tasks).toHaveLength(5);
+			expect(tasks[0].content).toBe("#work/main task1");
+			expect(tasks[1].content).toBe("#work/main task2");
+			expect(tasks[2].content).toBe("#work/groupA task1");
+			expect(tasks[3].content).toBe("#work/groupA task2");
+			expect(tasks[4].content).toBe("#work/groupB task1");
+		});
+
+		it("should stop at same-level heading even when includeSubHeadings is true", () => {
+			const content = `## Task
+
+- [ ] #work/main task1
+
+### Sub Heading
+
+- [ ] #work/sub task1
+
+## Other Section
+
+- [ ] #work/other task1`;
+
+			const tasks = extractTasksFromHeading(
+				content,
+				"## Task",
+				schedulePrefix,
+				true,
+			);
+
+			expect(tasks).toHaveLength(2);
+			expect(tasks[0].content).toBe("#work/main task1");
+			expect(tasks[1].content).toBe("#work/sub task1");
+		});
+
+		it("should handle multiple levels of sub-headings", () => {
+			const content = `## Task
+
+- [ ] task1
+
+### Level 3
+
+- [ ] task2
+
+#### Level 4
+
+- [ ] task3
+
+##### Level 5
+
+- [ ] task4`;
+
+			const tasks = extractTasksFromHeading(
+				content,
+				"## Task",
+				schedulePrefix,
+				true,
+			);
+
+			expect(tasks).toHaveLength(4);
+			expect(tasks[0].content).toBe("task1");
+			expect(tasks[1].content).toBe("task2");
+			expect(tasks[2].content).toBe("task3");
+			expect(tasks[3].content).toBe("task4");
+		});
+
+		it("should handle empty sub-headings", () => {
+			const content = `## Task
+
+- [ ] task1
+
+### Empty Sub Heading
+
+### Another Sub Heading
+
+- [ ] task2`;
+
+			const tasks = extractTasksFromHeading(
+				content,
+				"## Task",
+				schedulePrefix,
+				true,
+			);
+
+			expect(tasks).toHaveLength(2);
+			expect(tasks[0].content).toBe("task1");
+			expect(tasks[1].content).toBe("task2");
+		});
+
+		it("should handle h1 heading with sub-headings", () => {
+			const content = `# Main
+
+- [ ] task1
+
+## Sub
+
+- [ ] task2
+
+# Other Main
+
+- [ ] task3`;
+
+			const tasks = extractTasksFromHeading(
+				content,
+				"# Main",
+				schedulePrefix,
+				true,
+			);
+
+			expect(tasks).toHaveLength(2);
+			expect(tasks[0].content).toBe("task1");
+			expect(tasks[1].content).toBe("task2");
+		});
+
+		it("should default to false when includeSubHeadings is not provided", () => {
+			const content = `## Task
+
+- [ ] task1
+
+### Sub Heading
+
+- [ ] task2`;
+
+			const tasks = extractTasksFromHeading(
+				content,
+				"## Task",
+				schedulePrefix,
+			);
+
+			expect(tasks).toHaveLength(1);
+			expect(tasks[0].content).toBe("task1");
+		});
+	});
 });

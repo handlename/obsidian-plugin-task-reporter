@@ -1,6 +1,7 @@
 import {
 	extractTags,
 	findHeading,
+	getHeadingLevel,
 	parseTaskList,
 } from "../../src/utils/markdown-parser";
 import type { Task } from "../../src/models/task";
@@ -193,6 +194,42 @@ describe("markdown-parser", () => {
 		it("should not extract incomplete tags", () => {
 			const text = "Task with # only or #";
 			expect(extractTags(text)).toEqual([]);
+		});
+	});
+
+	describe("getHeadingLevel", () => {
+		it("should return 1 for h1 heading", () => {
+			expect(getHeadingLevel("# Heading")).toBe(1);
+		});
+
+		it("should return 2 for h2 heading", () => {
+			expect(getHeadingLevel("## Heading")).toBe(2);
+		});
+
+		it("should return 3 for h3 heading", () => {
+			expect(getHeadingLevel("### Heading")).toBe(3);
+		});
+
+		it("should return 6 for h6 heading", () => {
+			expect(getHeadingLevel("###### Heading")).toBe(6);
+		});
+
+		it("should return null for non-heading lines", () => {
+			expect(getHeadingLevel("Not a heading")).toBeNull();
+			expect(getHeadingLevel("- [x] Task")).toBeNull();
+			expect(getHeadingLevel("")).toBeNull();
+		});
+
+		it("should handle heading with leading whitespace", () => {
+			expect(getHeadingLevel("  ## Heading")).toBe(2);
+		});
+
+		it("should return null for # without space after", () => {
+			expect(getHeadingLevel("#NoSpace")).toBeNull();
+		});
+
+		it("should return null for # at end of line", () => {
+			expect(getHeadingLevel("Text with #")).toBeNull();
 		});
 	});
 });

@@ -6,6 +6,7 @@ export interface PluginSettings {
 	canceledCheckChar: string;
 	schedulePrefix: string;
 	includeScheduleItems: boolean;
+	includeSubHeadings: boolean;
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
@@ -16,4 +17,5 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 	canceledCheckChar: '-',
 	schedulePrefix: '🗓️',
 	includeScheduleItems: false,
+	includeSubHeadings: false,
 };
