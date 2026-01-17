@@ -105,5 +105,16 @@ export class TaskReporterSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				})
 			);
+
+		// アンカーを除去
+		new Setting(containerEl)
+			.setName('アンカーを除去')
+			.setDesc('ブロックリンク用のアンカー (^block-id) をレポートから除去する')
+			.addToggle((toggle) =>
+				toggle.setValue(this.plugin.settings.removeAnchors).onChange(async (value) => {
+					this.plugin.settings.removeAnchors = value;
+					await this.plugin.saveSettings();
+				})
+			);
 	}
 }

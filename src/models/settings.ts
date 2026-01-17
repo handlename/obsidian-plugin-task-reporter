@@ -7,6 +7,7 @@ export interface PluginSettings {
 	schedulePrefix: string;
 	includeScheduleItems: boolean;
 	includeSubHeadings: boolean;
+	removeAnchors: boolean;
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
@@ -18,4 +19,5 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 	schedulePrefix: '🗓️',
 	includeScheduleItems: false,
 	includeSubHeadings: false,
+	removeAnchors: true,
 };

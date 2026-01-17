@@ -4,6 +4,7 @@ import {
 	applyStrikethrough,
 	convertTag,
 	formatGitHubUrl,
+	removeAnchors,
 	removeInternalLinks,
 } from '../utils/text-formatter';
 
@@ -57,6 +58,11 @@ export function formatTaskContent(content: string, settings: PluginSettings): st
 
 	// FR-005: 内部リンク除去
 	result = removeInternalLinks(result);
+
+	// アンカー除去（設定で有効な場合）
+	if (settings.removeAnchors) {
+		result = removeAnchors(result);
+	}
 
 	// FR-006: GitHub URL整形
 	result = formatGitHubUrl(result);
