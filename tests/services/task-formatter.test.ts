@@ -15,6 +15,7 @@ describe("task-formatter", () => {
 		schedulePrefix: "🗓️",
 		includeScheduleItems: false,
 		includeSubHeadings: false,
+		removeAnchors: true,
 	};
 
 	const createTask = (
@@ -72,6 +73,19 @@ describe("task-formatter", () => {
 			const content = "Plain task content";
 			const result = formatTaskContent(content, defaultSettings);
 			expect(result).toBe("Plain task content");
+		});
+
+		it("should remove anchors when removeAnchors is true", () => {
+			const content = "Task content ^block-id";
+			const result = formatTaskContent(content, defaultSettings);
+			expect(result).toBe("Task content");
+		});
+
+		it("should preserve anchors when removeAnchors is false", () => {
+			const content = "Task content ^block-id";
+			const settings = { ...defaultSettings, removeAnchors: false };
+			const result = formatTaskContent(content, settings);
+			expect(result).toBe("Task content ^block-id");
 		});
 	});
 

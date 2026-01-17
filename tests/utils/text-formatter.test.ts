@@ -2,6 +2,7 @@ import {
 	applyStrikethrough,
 	convertTag,
 	formatGitHubUrl,
+	removeAnchors,
 	removeInternalLinks,
 } from "../../src/utils/text-formatter";
 
@@ -113,6 +114,52 @@ describe("text-formatter", () => {
 			expect(removeInternalLinks(text)).toBe(
 				"Internal link, external [link](https://example.com), wiki, alias",
 			);
+		});
+	});
+
+	describe("removeAnchors", () => {
+		it("should remove block anchor at end of line", () => {
+			const text = "Task content ^block-id";
+			expect(removeAnchors(text)).toBe("Task content");
+		});
+
+		it("should remove anchor with only alphanumeric characters", () => {
+			const text = "Task content ^abc123";
+			expect(removeAnchors(text)).toBe("Task content");
+		});
+
+		it("should remove anchor with hyphens", () => {
+			const text = "Task content ^my-block-id";
+			expect(removeAnchors(text)).toBe("Task content");
+		});
+
+		it("should remove anchor with underscores", () => {
+			const text = "Task content ^my_block_id";
+			expect(removeAnchors(text)).toBe("Task content");
+		});
+
+		it("should remove multiple anchors", () => {
+			const text = "First ^anchor1 and second ^anchor2";
+			expect(removeAnchors(text)).toBe("First and second");
+		});
+
+		it("should not remove caret without valid block id", () => {
+			const text = "5^2 equals 25";
+			expect(removeAnchors(text)).toBe("5^2 equals 25");
+		});
+
+		it("should handle text without anchors", () => {
+			const text = "Plain text without anchors";
+			expect(removeAnchors(text)).toBe("Plain text without anchors");
+		});
+
+		it("should handle empty string", () => {
+			expect(removeAnchors("")).toBe("");
+		});
+
+		it("should preserve WikiLink with anchor", () => {
+			const text = "See [[Note#^block-id]] for details";
+			expect(removeAnchors(text)).toBe("See [[Note#]] for details");
 		});
 	});
 

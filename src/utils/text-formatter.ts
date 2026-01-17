@@ -33,6 +33,25 @@ export function removeInternalLinks(text: string): string {
 }
 
 /**
+ * アンカー（ブロックリンク）を除去する
+ * Obsidianのブロックリンク形式 ^block-id を除去
+ * @param text テキスト
+ * @returns アンカー除去後のテキスト
+ */
+export function removeAnchors(text: string): string {
+	// ブロックIDアンカー: ^block-id 形式を除去
+	// スペースの後に続くアンカー、またはリンク内のアンカー参照を対象
+	// 累乗表記(5^2など)を誤って除去しないよう、^の前にスペースか#が必要
+	return text.replace(/\s+\^[\w-]+|#\^[\w-]+/g, (match) => {
+		// #で始まる場合は#を残す
+		if (match.startsWith('#')) {
+			return '#';
+		}
+		return '';
+	});
+}
+
+/**
  * GitHub URLを整形する (FR-006)
  * Issue/PR URLを [repo#number](url) 形式に変換
  * ただし、既にMarkdownリンク内にあるURLは変換しない
